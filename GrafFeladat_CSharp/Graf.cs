@@ -48,7 +48,7 @@ namespace GrafFeladat_CSharp
             if (cs1 < 0 || cs1 >= csucsokSzama ||
                 cs2 < 0 || cs2 >= csucsokSzama)
             {
-                throw new ArgumentOutOfRangeException("Hibas csucs index");
+                throw new ArgumentOutOfRangeException("Hibás csúcs index");
             }
 
             // Ha már szerepel az él, akkor nem kell felvenni
@@ -68,7 +68,7 @@ namespace GrafFeladat_CSharp
         {
             if (cs1 < 0 || cs1 >= csucsokSzama || cs2 < 0 || cs2 >= csucsokSzama)
             {
-                throw new ArgumentOutOfRangeException("Hibas csucs index");
+                throw new ArgumentOutOfRangeException("Hibás csúcs index");
             }
 
             El el1 = elek.Find((x) => x.Csucs1 == cs1 && x.Csucs2 == cs2);
@@ -77,6 +77,41 @@ namespace GrafFeladat_CSharp
             if(el1 != null && el2 != null) {
                 elek.Remove(el1);
                 elek.Remove(el2);
+            }
+        }
+
+        public void SzelessegiBejar(int kezdopont)
+        {
+            // Kezdetben egy pontot sem jártunk be
+            HashSet<int> bejart = new HashSet<int>();
+            
+            // A következőnek vizsgált elem a kezdőpont
+            Queue<int> kovetkezok = new Queue<int>();
+            int kovetkezo = 0;
+
+            if (kezdopont >= csucsokSzama || kezdopont < 0)
+            {
+                throw new ArgumentOutOfRangeException("Hibás kezdőpont");
+            }
+
+            kovetkezok.Enqueue(kezdopont);
+            bejart.Add(kezdopont);
+
+            
+            // Amíg van következő, addig megyünk
+            while (kovetkezok.Count != 0)
+            {
+                kovetkezo = kovetkezok.Dequeue();
+                Console.WriteLine(this.csucsok[kovetkezo]);
+
+                foreach (var item in elek)
+                {
+                    if (item.Csucs1 == kovetkezo && !bejart.Contains(item.Csucs2))
+                    {
+                        kovetkezok.Enqueue(item.Csucs2);
+                        bejart.Add(item.Csucs2);
+                    }
+                }
             }
         }
 
