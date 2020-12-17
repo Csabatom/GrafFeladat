@@ -22,7 +22,8 @@ namespace GrafFeladat_CSharp
             //graf.Torol(3, 2);
             //graf.Torol(4, 5);
             //graf.Torol(5, 4);
-            graf.SzelessegiBejar(3);
+            //graf.SzelessegiBejar(3);
+            //graf.MelysegiBejar(3);
 
             Console.WriteLine(graf);
             Console.ReadLine();
